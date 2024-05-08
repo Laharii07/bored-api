@@ -1,0 +1,25 @@
+
+body {
+    font-family:'Lucida Grande';
+    background-color: white;
+    color: black;
+}
+.container{
+    text-align : center;
+    margin-top : 300px;
+}
+button{
+    padding : 10px 20px;
+    background-color:black;
+    color:white;
+    border:none;
+    cursor:auto;
+}
+
+button:hover{
+    background-color: black;
+}
+#activity{
+    margin-top:20px;
+    font-size:30px;
+}
