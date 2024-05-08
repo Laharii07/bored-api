@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 activityText.textContent = data.activity;
-                const backgroundColor = getRandomColor();
+                const activityType = getActivityType(data.type);
+                const backgroundColor = getRandomColor(activityType);
                 body.style.backgroundColor = backgroundColor;
                 const textColor = isDarkColor(backgroundColor) ? 'white' : 'black';
                 activityText.style.color = textColor;
                 toggleButtonColor();
+                addEmoji(activityType);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -25,12 +27,25 @@ document.addEventListener('DOMContentLoaded', function() {
         generateBtn.classList.toggle('changed-color');
     }
 
-    // Function to generate a random color
-    function getRandomColor() {
-        const letters = '0123456789ABCDEF';
+    // Function to generate a random color based on activity type
+    function getRandomColor(activityType) {
         let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
+        switch (activityType) {
+            case 'social':
+                color = '#FF5733'; // Orange color for social activities
+                break;
+            case 'education':
+                color = '#65C7F7'; // Blue color for education activities
+                break;
+            case 'recreational':
+                color = '#7FFF00'; // Green color for recreational activities
+                break;
+            case 'diy':
+                color = '#FFD700'; // Gold color for DIY activities
+                break;
+            default:
+                color = '#333333'; // Default dark color for unknown activities
+                break;
         }
         return color;
     }
@@ -58,5 +73,33 @@ document.addEventListener('DOMContentLoaded', function() {
             b: parseInt(result[3], 16)
         } : null;
     }
-});
 
+    // Function to get the type of activity (social, education, recreational, diy)
+    function getActivityType(activityType) {
+        return activityType.toLowerCase();
+    }
+
+    // Function to add emoji based on activity type
+    function addEmoji(activityType) {
+        let emoji = '';
+        switch (activityType) {
+            case 'social':
+                emoji = '🎉'; // Party emoji for social activities
+                break;
+            case 'education':
+                emoji = '📚'; // Book emoji for education activities
+                break;
+            case 'recreational':
+                emoji = '⚽'; // Soccer ball emoji for recreational activities
+                break;
+            case 'diy':
+                emoji = '🔨'; // Hammer emoji for DIY activities
+                break;
+            default:
+                emoji = '❓'; // Question mark emoji for unknown activities
+                break;
+        }
+        // Display the emoji next to the activity text
+        activityText.textContent += ' ' + emoji;
+    }
+});
