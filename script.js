@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 emoji = '🔨'; // Hammer emoji for DIY activities
                 break;
             default:
-                emoji = '❓'; // Question mark emoji for unknown activities
+                emoji = '📝'; // Question mark emoji for unknown activities
                 break;
         }
         // Display the emoji next to the activity text
