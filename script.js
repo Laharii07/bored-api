@@ -1,16 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const generateBtn = document.getElementById('generate-btn');
     const activityText = document.getElementById('activity');
-    const emojiContainer = document.getElementById('emoji');
     const body = document.body;
 
     generateBtn.addEventListener('click', function() {
         fetch('https://www.boredapi.com/api/activity')
             .then(response => response.json())
             .then(data => {
-                activityText.textContent = data.activity;
-                const emoji = getEmojiForActivity(data.activity);
-                emojiContainer.textContent = emoji;
+                // Add emojis to the activity text
+                activityText.innerHTML = `${data.activity} ${getEmoji(data.type)}`;
                 const backgroundColor = getRandomColor();
                 body.style.backgroundColor = backgroundColor;
                 const textColor = isDarkColor(backgroundColor) ? 'white' : 'black';
@@ -20,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error fetching data:', error);
                 activityText.textContent = 'Error fetching activity. Please try again later.';
-                emojiContainer.textContent = ''; // Clear emoji container in case of error
             });
     });
 
@@ -63,17 +60,27 @@ document.addEventListener('DOMContentLoaded', function() {
         } : null;
     }
 
-    // Function to get emoji for a specific activity
-    function getEmojiForActivity(activity) {
-        // Define mapping of activities to emojis
-        const activityEmojis = {
-            "Reading": "📚",
-            "Cooking": "🍳",
-            "Exercise": "🏋️‍♂️",
-            "Watching TV": "📺",
-            // Add more mappings as needed
-        };
-        // Check if activity has a corresponding emoji, otherwise return default emoji
-        return activityEmojis[activity] || "❓";
+    // Function to get emoji based on activity type
+    function getEmoji(type) {
+        switch (type) {
+            case "education":
+                return "📚";
+            case "recreational":
+                return "🎮";
+            case "social":
+                return "👫";
+            case "diy":
+                return "🔨";
+            case "charity":
+                return "❤️";
+            case "cooking":
+                return "🍳";
+            case "relaxation":
+                return "😌";
+            case "music":
+                return "🎵";
+            default:
+                return "";
+        }
     }
 });
